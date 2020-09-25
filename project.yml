@@ -1,0 +1,14 @@
+name: BlinkOpenAPI
+targets:
+  BlinkOpenAPI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources: [BlinkOpenAPI]
+    info:
+      path: ./Info.plist
+      version: 0.1.0
+    settings:
+      APPLICATION_EXTENSION_API_ONLY: true
+    scheme: {}
+    
