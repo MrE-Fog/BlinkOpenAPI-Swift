@@ -11,24 +11,34 @@ import Foundation
 public struct Media: Codable { 
 
 
+    public enum Device: String, Codable, CaseIterable {
+        case camera = "camera"
+    }
+    public enum ModelType: String, Codable, CaseIterable {
+        case video = "video"
+    }
+    public enum Source: String, Codable, CaseIterable {
+        case liveview = "liveview"
+        case pir = "pir"
+    }
     public var id: Int
-    public var createdAt: String
-    public var updatedAt: String
+    public var createdAt: Date
+    public var updatedAt: Date
     public var deleted: Bool
-    public var device: String
+    public var device: Device
     public var deviceId: Int
     public var deviceName: String
     public var networkId: Int
     public var networkName: String
-    public var type: String
-    public var source: String
+    public var type: ModelType
+    public var source: Source
     public var watched: Bool
     public var partial: Bool
     public var thumbnail: String
     public var media: String
     public var timeZone: String
 
-    public init(id: Int, createdAt: String, updatedAt: String, deleted: Bool, device: String, deviceId: Int, deviceName: String, networkId: Int, networkName: String, type: String, source: String, watched: Bool, partial: Bool, thumbnail: String, media: String, timeZone: String) {
+    public init(id: Int, createdAt: Date, updatedAt: Date, deleted: Bool, device: Device, deviceId: Int, deviceName: String, networkId: Int, networkName: String, type: ModelType, source: Source, watched: Bool, partial: Bool, thumbnail: String, media: String, timeZone: String) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt

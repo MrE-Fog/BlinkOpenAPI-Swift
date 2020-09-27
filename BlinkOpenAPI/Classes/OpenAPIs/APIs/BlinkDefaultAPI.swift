@@ -190,7 +190,7 @@ open class BlinkDefaultAPI {
      - returns: AnyPublisher<VideoEvents, Error>
      */
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getVideoEvents(accountID: Int, since: String, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
+    open class func getVideoEvents(accountID: Int, since: Date, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
         return Future<VideoEvents, Error>.init { promisse in
             getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page).execute(apiResponseQueue) { result -> Void in
                 switch result {
@@ -210,7 +210,7 @@ open class BlinkDefaultAPI {
      - parameter page: (query) Page number for multiple pages of results 
      - returns: RequestBuilder<VideoEvents> 
      */
-    open class func getVideoEventsWithRequestBuilder(accountID: Int, since: String, page: Int) -> RequestBuilder<VideoEvents> {
+    open class func getVideoEventsWithRequestBuilder(accountID: Int, since: Date, page: Int) -> RequestBuilder<VideoEvents> {
         var path = "/api/v1/accounts/{accountID}/media/changed"
         let accountIDPreEscape = "\(APIHelper.mapValueToPathItem(accountID))"
         let accountIDPostEscape = accountIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

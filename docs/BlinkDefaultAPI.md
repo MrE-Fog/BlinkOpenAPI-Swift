@@ -208,7 +208,7 @@ No authorization required
 
 # **getVideoEvents**
 ```swift
-    open class func getVideoEvents(accountID: Int, since: String, page: Int, completion: @escaping (_ data: VideoEvents?, _ error: Error?) -> Void)
+    open class func getVideoEvents(accountID: Int, since: Date, page: Int, completion: @escaping (_ data: VideoEvents?, _ error: Error?) -> Void)
 ```
 
 
@@ -219,7 +219,7 @@ No authorization required
 import BlinkOpenAPI
 
 let accountID = 987 // Int | Account ID
-let since = "since_example" // String | 
+let since = Date() // Date | 
 let page = 987 // Int | Page number for multiple pages of results
 
 BlinkDefaultAPI.getVideoEvents(accountID: accountID, since: since, page: page) { (response, error) in
@@ -239,7 +239,7 @@ BlinkDefaultAPI.getVideoEvents(accountID: accountID, since: since, page: page) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountID** | **Int** | Account ID | 
- **since** | **String** |  | 
+ **since** | **Date** |  | 
  **page** | **Int** | Page number for multiple pages of results | 
 
 ### Return type

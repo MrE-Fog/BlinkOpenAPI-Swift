@@ -4,8 +4,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
-**createdAt** | **String** |  | 
-**updatedAt** | **String** |  | 
+**createdAt** | **Date** |  | 
+**updatedAt** | **Date** |  | 
 **name** | **String** |  | 
 **serial** | **String** |  | 
 **fwVersion** | **String** |  | 

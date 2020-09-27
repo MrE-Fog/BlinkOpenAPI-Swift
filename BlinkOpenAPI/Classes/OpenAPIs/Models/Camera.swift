@@ -12,8 +12,8 @@ public struct Camera: Codable {
 
 
     public var id: Int
-    public var createdAt: String
-    public var updatedAt: String
+    public var createdAt: Date
+    public var updatedAt: Date
     public var name: String
     public var serial: String
     public var fwVersion: String
@@ -28,7 +28,7 @@ public struct Camera: Codable {
     public var localStorageEnabled: Bool
     public var localStorageCompatible: Bool
 
-    public init(id: Int, createdAt: String, updatedAt: String, name: String, serial: String, fwVersion: String, type: String, enabled: Bool, thumbnail: String, status: String, battery: String, usageRate: Bool, networkId: Int, signals: CameraSignals, localStorageEnabled: Bool, localStorageCompatible: Bool) {
+    public init(id: Int, createdAt: Date, updatedAt: Date, name: String, serial: String, fwVersion: String, type: String, enabled: Bool, thumbnail: String, status: String, battery: String, usageRate: Bool, networkId: Int, signals: CameraSignals, localStorageEnabled: Bool, localStorageCompatible: Bool) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
