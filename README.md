@@ -49,7 +49,7 @@ Class | Method | HTTP request | Description
  - [LoginResponseClient](docs/LoginResponseClient.md)
  - [LoginResponseRegion](docs/LoginResponseRegion.md)
  - [Media](docs/Media.md)
- - [UnexpectedResponse](docs/UnexpectedResponse.md)
+ - [ModelError](docs/ModelError.md)
  - [VerifyPinRequest](docs/VerifyPinRequest.md)
  - [VerifyPinResponse](docs/VerifyPinResponse.md)
  - [VideoEvents](docs/VideoEvents.md)
