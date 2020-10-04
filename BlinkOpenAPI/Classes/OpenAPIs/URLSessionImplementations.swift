@@ -5,7 +5,10 @@
 //
 
 import Foundation
-#if !os(macOS)
+#if os(Linux)
+import FoundationNetworking
+#endif
+#if !os(macOS) && !os(Linux)
 import MobileCoreServices
 #endif
 
@@ -24,6 +27,7 @@ private var urlSessionStore = SynchronizedDictionary<String, URLSession>()
 
 open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
     
+    #if !os(Linux)
     let progress = Progress()
     
     private var observation: NSKeyValueObservation?
@@ -31,6 +35,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
     deinit {
         observation?.invalidate()
     }
+    #endif
     
     // swiftlint:disable:next weak_delegate
     fileprivate let sessionDelegate = SessionDelegate()
@@ -128,7 +133,9 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
         
         let cleanupRequest = {
             urlSessionStore[urlSessionId] = nil
+            #if !os(Linux)
             self.observation?.invalidate()
+            #endif
         }
         
         do {
@@ -160,6 +167,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
                 }
             }
             
+            #if !os(Linux)
             if #available(iOS 11.0, macOS 10.13, macCatalyst 13.0, tvOS 11.0, watchOS 4.0, *) {
                 observation = dataTask.progress.observe(\.fractionCompleted) { newProgress, _ in
                     self.progress.totalUnitCount = newProgress.totalUnitCount
@@ -168,6 +176,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
                 
                 onProgressReady?(progress)
             }
+            #endif
             
             dataTask.resume()
             
@@ -563,11 +572,13 @@ fileprivate class FileUploadEncoding: ParameterEncoding {
     func mimeType(for url: URL) -> String {
         let pathExtension = url.pathExtension
 
+        #if !os(Linux)
         if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
             if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
                 return mimetype as String
             }
         }
+        #endif
         return "application/octet-stream"
     }
 
