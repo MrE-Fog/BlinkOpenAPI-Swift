@@ -5,6 +5,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 protocol JSONEncodable {
     func encodeToJSON() -> Any

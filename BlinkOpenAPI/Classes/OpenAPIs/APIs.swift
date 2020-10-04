@@ -5,6 +5,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 open class BlinkOpenAPIAPI {
     public static var basePath = "https://rest-prod.immedia-semi.com"
