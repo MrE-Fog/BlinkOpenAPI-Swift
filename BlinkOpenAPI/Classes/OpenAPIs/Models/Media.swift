@@ -33,12 +33,12 @@ public struct Media: Codable {
     public var type: ModelType
     public var source: Source
     public var watched: Bool
-    public var partial: Bool
+    public var partial: Bool?
     public var thumbnail: String
     public var media: String
     public var timeZone: String
 
-    public init(id: Int, createdAt: Date, updatedAt: Date, deleted: Bool, device: Device, deviceId: Int, deviceName: String, networkId: Int, networkName: String, type: ModelType, source: Source, watched: Bool, partial: Bool, thumbnail: String, media: String, timeZone: String) {
+    public init(id: Int, createdAt: Date, updatedAt: Date, deleted: Bool, device: Device, deviceId: Int, deviceName: String, networkId: Int, networkName: String, type: ModelType, source: Source, watched: Bool, partial: Bool?, thumbnail: String, media: String, timeZone: String) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
