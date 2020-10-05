@@ -11,3 +11,12 @@ openapi-generator generate \
     -c openapi-generator-config-swift5.yaml \
     -o . \
     "$@"
+
+# Apply patches for Linux
+
+rm Package.resolved
+
+for i in ./PatchesForLinux/*.patch
+do
+    patch -p1 < "$i"
+done

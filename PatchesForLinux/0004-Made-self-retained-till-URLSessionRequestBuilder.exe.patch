@@ -1,0 +1,28 @@
+From b056bc56d7da70f8e68a6b7144f1baa9f32f7dd9 Mon Sep 17 00:00:00 2001
+From: Grigory Entin <grigory.entin@gmail.com>
+Date: Mon, 5 Oct 2020 00:32:55 +0200
+Subject: [PATCH 4/5] Made self retained till URLSessionRequestBuilder.execute
+ completion.
+
+---
+ BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift b/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift
+index 8e99fad..510cbf8 100644
+--- a/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift
++++ b/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift
+@@ -141,9 +141,7 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
+         do {
+             let request = try createURLRequest(urlSession: urlSession, method: xMethod, encoding: encoding, headers: headers)
+             
+-            let dataTask = urlSession.dataTask(with: request) { [weak self] data, response, error in
+-                
+-                guard let self = self else { return }
++            let dataTask = urlSession.dataTask(with: request) { data, response, error in
+                 
+                 if let taskCompletionShouldRetry = self.taskCompletionShouldRetry {
+                     
+-- 
+2.27.0
+

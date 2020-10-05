@@ -1,0 +1,64 @@
+From e8cdebcc6294b7871340ccfd444da5c1354e0e87 Mon Sep 17 00:00:00 2001
+From: Grigory Entin <grigory.entin@gmail.com>
+Date: Mon, 5 Oct 2020 00:33:20 +0200
+Subject: [PATCH 5/5] Added support for Linux/OpenCombine.
+
+---
+ Package.resolved | 16 ++++++++++++++++
+ Package.swift    |  7 +++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+ create mode 100644 Package.resolved
+
+diff --git a/Package.resolved b/Package.resolved
+new file mode 100644
+index 0000000..ed850b0
+--- /dev/null
++++ b/Package.resolved
+@@ -0,0 +1,16 @@
++{
++  "object": {
++    "pins": [
++      {
++        "package": "OpenCombine",
++        "repositoryURL": "https://github.com/OpenCombine/OpenCombine.git",
++        "state": {
++          "branch": null,
++          "revision": "915a7efaf596058f9867ba76b08339740c47452e",
++          "version": "0.10.1"
++        }
++      }
++    ]
++  },
++  "version": 1
++}
+diff --git a/Package.swift b/Package.swift
+index 7add4b4..00d0287 100644
+--- a/Package.swift
++++ b/Package.swift
+@@ -1,4 +1,4 @@
+-// swift-tools-version:5.0
++// swift-tools-version:5.3
+ 
+ import PackageDescription
+ 
+@@ -18,13 +18,16 @@ let package = Package(
+     ],
+     dependencies: [
+         // Dependencies declare other packages that this package depends on.
++        .package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.10.1")
+     ],
+     targets: [
+         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+         .target(
+             name: "BlinkOpenAPI",
+-            dependencies: [],
++            dependencies: [
++                .product(name: "OpenCombine", package: "OpenCombine", condition: .when(platforms: [.linux]))
++            ],
+             path: "BlinkOpenAPI/Classes"
+         ),
+     ]
+-- 
+2.27.0
+

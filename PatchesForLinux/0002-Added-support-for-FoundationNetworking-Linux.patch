@@ -1,0 +1,71 @@
+From 3e55ef972334fa2a6f645d9c7c5bb385686c1a6f Mon Sep 17 00:00:00 2001
+From: Grigory Entin <grigory.entin@gmail.com>
+Date: Mon, 5 Oct 2020 00:29:41 +0200
+Subject: [PATCH 2/5] Added support for FoundationNetworking/Linux.
+
+---
+ BlinkOpenAPI/Classes/OpenAPIs/APIs.swift             | 3 +++
+ BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift       | 3 +++
+ BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift | 3 +++
+ BlinkOpenAPI/Classes/OpenAPIs/Models.swift           | 3 +++
+ 4 files changed, 12 insertions(+)
+
+diff --git a/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift b/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
+index 2562f66..544e5f9 100644
+--- a/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
++++ b/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ open class BlinkOpenAPIAPI {
+     public static var basePath = "https://rest-prod.immedia-semi.com"
+diff --git a/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift b/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift
+index 6e27967..31efaa5 100644
+--- a/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift
++++ b/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ extension Bool: JSONEncodable {
+     func encodeToJSON() -> Any { return self as Any }
+diff --git a/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift b/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift
+index 08f1ef3..e96ceb9 100644
+--- a/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift
++++ b/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift
+@@ -6,6 +6,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ public struct JSONDataEncoding {
+ 
+diff --git a/BlinkOpenAPI/Classes/OpenAPIs/Models.swift b/BlinkOpenAPI/Classes/OpenAPIs/Models.swift
+index 290c7f3..0a07a06 100644
+--- a/BlinkOpenAPI/Classes/OpenAPIs/Models.swift
++++ b/BlinkOpenAPI/Classes/OpenAPIs/Models.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ protocol JSONEncodable {
+     func encodeToJSON() -> Any
+-- 
+2.27.0
+
