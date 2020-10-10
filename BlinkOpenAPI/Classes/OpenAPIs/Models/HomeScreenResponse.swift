@@ -12,11 +12,22 @@ public struct HomeScreenResponse: Codable {
 
 
     public var account: HomeScreenResponseAccount
+    public var networks: [Network]
+    public var syncModules: [SyncModule]
     public var cameras: [Camera]
 
-    public init(account: HomeScreenResponseAccount, cameras: [Camera]) {
+    public init(account: HomeScreenResponseAccount, networks: [Network], syncModules: [SyncModule], cameras: [Camera]) {
         self.account = account
+        self.networks = networks
+        self.syncModules = syncModules
         self.cameras = cameras
+    }
+
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
+        case account
+        case networks
+        case syncModules = "sync_modules"
+        case cameras
     }
 
 }

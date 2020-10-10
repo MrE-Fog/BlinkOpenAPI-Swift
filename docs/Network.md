@@ -1,12 +1,16 @@
-# HomeScreenResponse
+# Network
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**account** | [**HomeScreenResponseAccount**](HomeScreenResponseAccount.md) |  | 
-**networks** | [Network] |  | 
-**syncModules** | [SyncModule] |  | 
-**cameras** | [Camera] |  | 
+**id** | **Int** |  | 
+**createdAt** | **Date** |  | 
+**updatedAt** | **Date** |  | 
+**name** | **String** |  | 
+**timeZone** | **String** |  | 
+**dst** | **Bool** |  | 
+**armed** | **Bool** |  | 
+**lvSave** | **Bool** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
