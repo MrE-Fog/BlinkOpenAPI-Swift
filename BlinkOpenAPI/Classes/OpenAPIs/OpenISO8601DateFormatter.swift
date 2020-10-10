@@ -7,6 +7,7 @@
 
 import Foundation
 
+#if false
 // https://stackoverflow.com/a/50281094/976628
 public class OpenISO8601DateFormatter: DateFormatter {
     static let withoutSeconds: DateFormatter = {
@@ -42,3 +43,4 @@ public class OpenISO8601DateFormatter: DateFormatter {
         return OpenISO8601DateFormatter.withoutSeconds.date(from: string)
     }
 }
+#endif
