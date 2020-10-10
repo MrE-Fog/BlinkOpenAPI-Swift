@@ -73,7 +73,7 @@ extension Data: JSONEncodable {
 
 extension Date: JSONEncodable {
     func encodeToJSON() -> Any {
-        return CodableHelper.dateFormatter.string(from: self) as Any
+        return ISO8601DateFormatter().string(from: self) as Any
     }
 }
 

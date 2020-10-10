@@ -9,26 +9,20 @@ import Foundation
 
 open class CodableHelper {
 
-    private static var customDateFormatter: DateFormatter?
-    private static var defaultDateFormatter: DateFormatter = OpenISO8601DateFormatter()
     private static var customJSONDecoder: JSONDecoder?
     private static var defaultJSONDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(CodableHelper.dateFormatter)
+        decoder.dateDecodingStrategy = .iso8601
         return decoder
     }()
     private static var customJSONEncoder: JSONEncoder?
     private static var defaultJSONEncoder: JSONEncoder = {
        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .formatted(CodableHelper.dateFormatter)
+        encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }()
 
-    public static var dateFormatter: DateFormatter {
-        get { return self.customDateFormatter ?? self.defaultDateFormatter }
-        set { self.customDateFormatter = newValue }
-    }
     public static var jsonDecoder: JSONDecoder {
         get { return self.customJSONDecoder ?? self.defaultJSONDecoder }
         set { self.customJSONDecoder = newValue }
