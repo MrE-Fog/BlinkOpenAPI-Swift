@@ -6,7 +6,7 @@ let package = Package(
     name: "BlinkOpenAPI",
     platforms: [
         .iOS(.v9),
-        .macOS(.v10_12),
+        .macOS(.v10_11),
         .tvOS(.v9),
         .watchOS(.v3)
     ],
