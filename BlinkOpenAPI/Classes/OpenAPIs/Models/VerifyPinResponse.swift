@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct VerifyPinResponse: Codable { 
-
+public struct VerifyPinResponse: Codable {
 
     public var valid: Bool
     public var requireNewPin: Bool
@@ -23,7 +21,7 @@ public struct VerifyPinResponse: Codable {
         self.code = code
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case valid
         case requireNewPin = "require_new_pin"
         case message

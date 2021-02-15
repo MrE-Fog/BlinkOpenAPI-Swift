@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct Network: Codable { 
-
+public struct Network: Codable {
 
     public var id: Int
     public var createdAt: Date
@@ -31,7 +29,7 @@ public struct Network: Codable {
         self.lvSave = lvSave
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case createdAt = "created_at"
         case updatedAt = "updated_at"

@@ -6,13 +6,9 @@
 //
 
 import Foundation
-#if os(Linux)
-import OpenCombine
-#else
+#if canImport(Combine)
 import Combine
 #endif
-
-
 
 open class BlinkDefaultAPI {
     /**
@@ -22,19 +18,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<InitialCommandResponse, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func disableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
-        return Future<InitialCommandResponse, Error>.init { promisse in
+        return Future<InitialCommandResponse, Error>.init { promise in
             disableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - POST /network/{networkID}/camera/{cameraID}/disable
@@ -51,13 +49,19 @@ open class BlinkDefaultAPI {
         let cameraIDPostEscape = cameraIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{cameraID}", with: cameraIDPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         let url = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InitialCommandResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -67,19 +71,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<InitialCommandResponse, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func enableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
-        return Future<InitialCommandResponse, Error>.init { promisse in
+        return Future<InitialCommandResponse, Error>.init { promise in
             enableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - POST /network/{networkID}/camera/{cameraID}/enable
@@ -96,13 +102,19 @@ open class BlinkDefaultAPI {
         let cameraIDPostEscape = cameraIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{cameraID}", with: cameraIDPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         let url = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InitialCommandResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -111,19 +123,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<URL, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getThumbnail(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
-        return Future<URL, Error>.init { promisse in
+        return Future<URL, Error>.init { promise in
             getThumbnailWithRequestBuilder(media: media).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - GET /{media}.jpg
@@ -136,13 +150,19 @@ open class BlinkDefaultAPI {
         let mediaPostEscape = mediaPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{media}", with: mediaPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         let url = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<URL>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -151,19 +171,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<URL, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideo(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
-        return Future<URL, Error>.init { promisse in
+        return Future<URL, Error>.init { promise in
             getVideoWithRequestBuilder(media: media).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - GET /{media}
@@ -176,13 +198,19 @@ open class BlinkDefaultAPI {
         let mediaPostEscape = mediaPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{media}", with: mediaPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         let url = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<URL>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -193,19 +221,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<VideoEvents, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideoEvents(accountID: Int, since: Date, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
-        return Future<VideoEvents, Error>.init { promisse in
+        return Future<VideoEvents, Error>.init { promise in
             getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - GET /api/v1/accounts/{accountID}/media/changed
@@ -220,17 +250,23 @@ open class BlinkDefaultAPI {
         let accountIDPostEscape = accountIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{accountID}", with: accountIDPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "since": since.encodeToJSON(), 
-            "page": page.encodeToJSON()
+            "since": since.encodeToJSON(),
+            "page": page.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<VideoEvents>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -239,19 +275,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<HomeScreenResponse, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func homescreen(accountID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<HomeScreenResponse, Error> {
-        return Future<HomeScreenResponse, Error>.init { promisse in
+        return Future<HomeScreenResponse, Error>.init { promise in
             homescreenWithRequestBuilder(accountID: accountID).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - GET /api/v3/accounts/{accountID}/homescreen
@@ -264,13 +302,19 @@ open class BlinkDefaultAPI {
         let accountIDPostEscape = accountIDPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{accountID}", with: accountIDPostEscape, options: .literal, range: nil)
         let URLString = BlinkOpenAPIAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
+        let parameters: [String: Any]? = nil
+
         let url = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<HomeScreenResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -279,19 +323,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<LoginResponse, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func login(loginRequest: LoginRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<LoginResponse, Error> {
-        return Future<LoginResponse, Error>.init { promisse in
+        return Future<LoginResponse, Error>.init { promise in
             loginWithRequestBuilder(loginRequest: loginRequest).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - POST /api/v4/account/login
@@ -305,9 +351,15 @@ open class BlinkDefaultAPI {
 
         let url = URLComponents(string: URLString)
 
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
         let requestBuilder: RequestBuilder<LoginResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -318,19 +370,21 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<VerifyPinResponse, Error>
      */
+    #if canImport(Combine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VerifyPinResponse, Error> {
-        return Future<VerifyPinResponse, Error>.init { promisse in
+        return Future<VerifyPinResponse, Error>.init { promise in
             verifyPinWithRequestBuilder(accountID: accountID, clientID: clientID, verifyPinRequest: verifyPinRequest).execute(apiResponseQueue) { result -> Void in
                 switch result {
                 case let .success(response):
-                    promisse(.success(response.body!))
+                    promise(.success(response.body!))
                 case let .failure(error):
-                    promisse(.failure(error))
+                    promise(.failure(error))
                 }
             }
         }.eraseToAnyPublisher()
     }
+    #endif
 
     /**
      - POST /api/v4/account/{accountID}/client/{clientID}/pin/verify
@@ -352,9 +406,15 @@ open class BlinkDefaultAPI {
 
         let url = URLComponents(string: URLString)
 
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
         let requestBuilder: RequestBuilder<VerifyPinResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

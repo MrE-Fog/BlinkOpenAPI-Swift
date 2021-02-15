@@ -7,17 +7,15 @@
 
 import Foundation
 
-
-public struct Issue: Codable { 
-
+public struct Issue: Codable {
 
     public var unknown: Int?
 
-    public init(unknown: Int?) {
+    public init(unknown: Int? = nil) {
         self.unknown = unknown
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case unknown = "__unknown"
     }
 

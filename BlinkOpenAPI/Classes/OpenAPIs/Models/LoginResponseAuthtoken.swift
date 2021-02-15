@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct LoginResponseAuthtoken: Codable { 
-
+public struct LoginResponseAuthtoken: Codable {
 
     public var authtoken: String
     public var message: String

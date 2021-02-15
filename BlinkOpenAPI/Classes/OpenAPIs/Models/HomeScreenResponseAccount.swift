@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct HomeScreenResponseAccount: Codable { 
-
+public struct HomeScreenResponseAccount: Codable {
 
     public var id: Int
     public var emailVerified: Bool
@@ -21,7 +19,7 @@ public struct HomeScreenResponseAccount: Codable {
         self.emailVerificationRequired = emailVerificationRequired
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case emailVerified = "email_verified"
         case emailVerificationRequired = "email_verification_required"

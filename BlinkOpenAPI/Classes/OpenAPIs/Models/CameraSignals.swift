@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct CameraSignals: Codable { 
-
+public struct CameraSignals: Codable {
 
     public var lfr: Int
     public var wifi: Int

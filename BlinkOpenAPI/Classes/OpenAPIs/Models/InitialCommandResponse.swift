@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct InitialCommandResponse: Codable { 
-
+public struct InitialCommandResponse: Codable {
 
     public var id: Int
 

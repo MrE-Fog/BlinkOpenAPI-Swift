@@ -7,21 +7,19 @@
 
 import Foundation
 
-
-public struct LoginRequest: Codable { 
-
+public struct LoginRequest: Codable {
 
     public var uniqueId: String?
     public var password: String
     public var email: String
 
-    public init(uniqueId: String?, password: String, email: String) {
+    public init(uniqueId: String? = nil, password: String, email: String) {
         self.uniqueId = uniqueId
         self.password = password
         self.email = email
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case uniqueId = "unique_id"
         case password
         case email

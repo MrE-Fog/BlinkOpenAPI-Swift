@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct LoginResponseRegion: Codable { 
-
+public struct LoginResponseRegion: Codable {
 
     public var tier: String
     public var description: String

@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct Media: Codable { 
-
+public struct Media: Codable {
 
     public enum Device: String, Codable, CaseIterable {
         case camera = "camera"
@@ -57,7 +55,7 @@ public struct Media: Codable {
         self.timeZone = timeZone
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case createdAt = "created_at"
         case updatedAt = "updated_at"

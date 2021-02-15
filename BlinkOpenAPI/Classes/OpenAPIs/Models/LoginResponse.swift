@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct LoginResponse: Codable { 
-
+public struct LoginResponse: Codable {
 
     public var account: LoginResponseAccount
     public var client: LoginResponseClient
@@ -29,7 +27,7 @@ public struct LoginResponse: Codable {
         self.allowPinResendSeconds = allowPinResendSeconds
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case account
         case client
         case authtoken

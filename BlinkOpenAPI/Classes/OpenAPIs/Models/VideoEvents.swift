@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct VideoEvents: Codable { 
-
+public struct VideoEvents: Codable {
 
     public var limit: Int
     public var purgeId: Int
@@ -23,7 +21,7 @@ public struct VideoEvents: Codable {
         self.media = media
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case limit
         case purgeId = "purge_id"
         case refreshCount = "refresh_count"

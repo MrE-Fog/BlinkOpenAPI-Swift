@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct HomeScreenResponse: Codable { 
-
+public struct HomeScreenResponse: Codable {
 
     public var account: HomeScreenResponseAccount
     public var networks: [Network]
@@ -23,7 +21,7 @@ public struct HomeScreenResponse: Codable {
         self.cameras = cameras
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case account
         case networks
         case syncModules = "sync_modules"

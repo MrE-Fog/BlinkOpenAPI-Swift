@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct SyncModule: Codable { 
-
+public struct SyncModule: Codable {
 
     public enum Status: String, Codable, CaseIterable {
         case online = "online"
@@ -49,7 +47,7 @@ public struct SyncModule: Codable {
         self.localStorageStatus = localStorageStatus
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case createdAt = "created_at"
         case updatedAt = "updated_at"

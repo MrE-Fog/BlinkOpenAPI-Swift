@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct VerifyPinRequest: Codable { 
-
+public struct VerifyPinRequest: Codable {
 
     public var pin: String
 

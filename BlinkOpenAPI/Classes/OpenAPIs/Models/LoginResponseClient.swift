@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct LoginResponseClient: Codable { 
-
+public struct LoginResponseClient: Codable {
 
     public var id: Int
     public var verificationRequired: Bool
@@ -19,7 +17,7 @@ public struct LoginResponseClient: Codable {
         self.verificationRequired = verificationRequired
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case verificationRequired = "verification_required"
     }

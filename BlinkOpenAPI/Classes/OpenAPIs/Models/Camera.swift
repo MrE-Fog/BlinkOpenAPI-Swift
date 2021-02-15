@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-public struct Camera: Codable { 
-
+public struct Camera: Codable {
 
     public enum Status: String, Codable, CaseIterable {
         case done = "done"
@@ -57,7 +55,7 @@ public struct Camera: Codable {
         self.localStorageCompatible = localStorageCompatible
     }
 
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case createdAt = "created_at"
         case updatedAt = "updated_at"
