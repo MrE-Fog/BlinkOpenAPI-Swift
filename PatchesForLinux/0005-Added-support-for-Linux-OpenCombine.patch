@@ -41,7 +41,7 @@ index 7add4b4..00d0287 100644
  
  import PackageDescription
  
-@@ -18,13 +18,16 @@ let package = Package(
+@@ -19,13 +19,16 @@ let package = Package(
      ],
      dependencies: [
          // Dependencies declare other packages that this package depends on.

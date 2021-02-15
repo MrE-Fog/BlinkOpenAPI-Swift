@@ -1,28 +1,30 @@
-From 72b247747e1687629c4b4d552136388f366932cf Mon Sep 17 00:00:00 2001
+From fc71657c38d343ff089323d3986a660745f56b11 Mon Sep 17 00:00:00 2001
 From: Grigory Entin <grigory.entin@gmail.com>
-Date: Mon, 5 Oct 2020 00:29:59 +0200
-Subject: [PATCH 3/5] Added support for OpenCombine/Linux.
+Date: Mon, 15 Feb 2021 23:23:55 +0100
+Subject: [PATCH] Added support for OpenCombine/Linux.
 
 ---
  BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift b/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift
-index f25eda5..19ab4ec 100644
+index baf2df4..58395e7 100644
 --- a/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift
 +++ b/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift
-@@ -6,7 +6,11 @@
+@@ -6,9 +6,13 @@
  //
  
  import Foundation
 +#if os(Linux)
 +import OpenCombine
 +#else
+ #if canImport(Combine)
  import Combine
+ #endif
 +#endif
  
- 
- 
+ open class BlinkDefaultAPI {
+     /**
 -- 
 2.27.0
 
