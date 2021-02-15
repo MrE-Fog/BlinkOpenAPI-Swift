@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if os(Linux)
+import OpenCombine
+#else
 #if canImport(Combine)
 import Combine
+#endif
 #endif
 
 open class BlinkDefaultAPI {
