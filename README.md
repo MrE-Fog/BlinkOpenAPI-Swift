@@ -31,7 +31,7 @@ Class | Method | HTTP request | Description
 *BlinkDefaultAPI* | [**getVideo**](docs/BlinkDefaultAPI.md#getvideo) | **GET** /{media} | 
 *BlinkDefaultAPI* | [**getVideoEvents**](docs/BlinkDefaultAPI.md#getvideoevents) | **GET** /api/v1/accounts/{accountID}/media/changed | 
 *BlinkDefaultAPI* | [**homescreen**](docs/BlinkDefaultAPI.md#homescreen) | **GET** /api/v3/accounts/{accountID}/homescreen | 
-*BlinkDefaultAPI* | [**login**](docs/BlinkDefaultAPI.md#login) | **POST** /api/v4/account/login | 
+*BlinkDefaultAPI* | [**login**](docs/BlinkDefaultAPI.md#login) | **POST** /api/v5/account/login | 
 *BlinkDefaultAPI* | [**verifyPin**](docs/BlinkDefaultAPI.md#verifypin) | **POST** /api/v4/account/{accountID}/client/{clientID}/pin/verify | 
 
 

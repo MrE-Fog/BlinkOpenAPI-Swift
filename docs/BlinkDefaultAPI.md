@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**getVideo**](BlinkDefaultAPI.md#getvideo) | **GET** /{media} | 
 [**getVideoEvents**](BlinkDefaultAPI.md#getvideoevents) | **GET** /api/v1/accounts/{accountID}/media/changed | 
 [**homescreen**](BlinkDefaultAPI.md#homescreen) | **GET** /api/v3/accounts/{accountID}/homescreen | 
-[**login**](BlinkDefaultAPI.md#login) | **POST** /api/v4/account/login | 
+[**login**](BlinkDefaultAPI.md#login) | **POST** /api/v5/account/login | 
 [**verifyPin**](BlinkDefaultAPI.md#verifypin) | **POST** /api/v4/account/{accountID}/client/{clientID}/pin/verify | 
 
 

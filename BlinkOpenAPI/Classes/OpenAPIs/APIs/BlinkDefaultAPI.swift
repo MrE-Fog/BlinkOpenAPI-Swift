@@ -344,12 +344,12 @@ open class BlinkDefaultAPI {
     #endif
 
     /**
-     - POST /api/v4/account/login
+     - POST /api/v5/account/login
      - parameter loginRequest: (body)  
      - returns: RequestBuilder<LoginResponse> 
      */
     open class func loginWithRequestBuilder(loginRequest: LoginRequest) -> RequestBuilder<LoginResponse> {
-        let path = "/api/v4/account/login"
+        let path = "/api/v5/account/login"
         let URLString = BlinkOpenAPIAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: loginRequest)
 
