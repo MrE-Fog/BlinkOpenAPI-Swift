@@ -5,6 +5,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 
 extension Bool: JSONEncodable {
     func encodeToJSON() -> Any { return self as Any }
