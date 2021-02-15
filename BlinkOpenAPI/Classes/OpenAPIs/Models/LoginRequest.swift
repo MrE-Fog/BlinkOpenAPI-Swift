@@ -12,17 +12,29 @@ public struct LoginRequest: Codable {
     public var uniqueId: String?
     public var password: String
     public var email: String
+    public var clientName: String?
+    public var appVersion: String?
+    public var reauth: Bool?
+    public var deviceIdentifier: String?
 
-    public init(uniqueId: String? = nil, password: String, email: String) {
+    public init(uniqueId: String? = nil, password: String, email: String, clientName: String? = nil, appVersion: String? = nil, reauth: Bool? = nil, deviceIdentifier: String? = nil) {
         self.uniqueId = uniqueId
         self.password = password
         self.email = email
+        self.clientName = clientName
+        self.appVersion = appVersion
+        self.reauth = reauth
+        self.deviceIdentifier = deviceIdentifier
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case uniqueId = "unique_id"
         case password
         case email
+        case clientName = "client_name"
+        case appVersion = "app_version"
+        case reauth
+        case deviceIdentifier = "device_identifier"
     }
 
 }

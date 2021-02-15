@@ -316,7 +316,7 @@ No authorization required
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import BlinkOpenAPI
 
-let loginRequest = LoginRequest(uniqueId: "uniqueId_example", password: "password_example", email: "email_example") // LoginRequest | 
+let loginRequest = LoginRequest(uniqueId: "uniqueId_example", password: "password_example", email: "email_example", clientName: "clientName_example", appVersion: "appVersion_example", reauth: false, deviceIdentifier: "deviceIdentifier_example") // LoginRequest | 
 
 BlinkDefaultAPI.login(loginRequest: loginRequest) { (response, error) in
     guard error == nil else {
