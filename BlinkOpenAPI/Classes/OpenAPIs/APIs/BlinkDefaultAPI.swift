@@ -22,7 +22,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<InitialCommandResponse, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func disableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
         return Future<InitialCommandResponse, Error>.init { promise in
@@ -75,7 +75,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<InitialCommandResponse, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func enableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
         return Future<InitialCommandResponse, Error>.init { promise in
@@ -127,7 +127,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<URL, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getThumbnail(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
         return Future<URL, Error>.init { promise in
@@ -175,7 +175,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<URL, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideo(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
         return Future<URL, Error>.init { promise in
@@ -225,7 +225,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<VideoEvents, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideoEvents(accountID: Int, since: Date, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
         return Future<VideoEvents, Error>.init { promise in
@@ -279,7 +279,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<HomeScreenResponse, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func homescreen(accountID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<HomeScreenResponse, Error> {
         return Future<HomeScreenResponse, Error>.init { promise in
@@ -327,7 +327,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<LoginResponse, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func login(loginRequest: LoginRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<LoginResponse, Error> {
         return Future<LoginResponse, Error>.init { promise in
@@ -374,7 +374,7 @@ open class BlinkDefaultAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - returns: AnyPublisher<VerifyPinResponse, Error>
      */
-    #if canImport(Combine)
+    #if canImport(Combine) || canImport(OpenCombine)
     @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VerifyPinResponse, Error> {
         return Future<VerifyPinResponse, Error>.init { promise in
