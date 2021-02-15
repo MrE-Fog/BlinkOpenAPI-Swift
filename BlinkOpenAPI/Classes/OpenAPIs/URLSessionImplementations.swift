@@ -5,7 +5,10 @@
 //
 
 import Foundation
-#if !os(macOS)
+#if os(Linux)
+import FoundationNetworking
+#endif
+#if !os(macOS) && !os(Linux)
 import MobileCoreServices
 #endif
 
@@ -555,11 +558,13 @@ private class FormDataEncoding: ParameterEncoding {
     func mimeType(for url: URL) -> String {
         let pathExtension = url.pathExtension
 
+        #if !os(Linux)
         if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
             if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
                 return mimetype as String
             }
         }
+        #endif
         return "application/octet-stream"
     }
 
