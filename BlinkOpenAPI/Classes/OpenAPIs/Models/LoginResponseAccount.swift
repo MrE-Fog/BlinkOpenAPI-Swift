@@ -9,20 +9,41 @@ import Foundation
 
 public struct LoginResponseAccount: Codable {
 
-    public var id: Int
-    public var verificationRequired: Bool
+    public var accountId: Int
+    public var userId: Int
+    public var clientId: Int
     public var newAccount: Bool
+    public var tier: String
+    public var region: String
+    public var accountVerificationRequired: Bool
+    public var clientVerificationRequired: Bool
+    public var phoneVerificationRequired: Bool
+    public var verificationChannel: String
 
-    public init(id: Int, verificationRequired: Bool, newAccount: Bool) {
-        self.id = id
-        self.verificationRequired = verificationRequired
+    public init(accountId: Int, userId: Int, clientId: Int, newAccount: Bool, tier: String, region: String, accountVerificationRequired: Bool, clientVerificationRequired: Bool, phoneVerificationRequired: Bool, verificationChannel: String) {
+        self.accountId = accountId
+        self.userId = userId
+        self.clientId = clientId
         self.newAccount = newAccount
+        self.tier = tier
+        self.region = region
+        self.accountVerificationRequired = accountVerificationRequired
+        self.clientVerificationRequired = clientVerificationRequired
+        self.phoneVerificationRequired = phoneVerificationRequired
+        self.verificationChannel = verificationChannel
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case id
-        case verificationRequired = "verification_required"
+        case accountId = "account_id"
+        case userId = "user_id"
+        case clientId = "client_id"
         case newAccount = "new_account"
+        case tier
+        case region
+        case accountVerificationRequired = "account_verification_required"
+        case clientVerificationRequired = "client_verification_required"
+        case phoneVerificationRequired = "phone_verification_required"
+        case verificationChannel = "verification_channel"
     }
 
 }

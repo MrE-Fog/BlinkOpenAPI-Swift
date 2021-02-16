@@ -10,18 +10,18 @@ import Foundation
 public struct LoginResponse: Codable {
 
     public var account: LoginResponseAccount
-    public var client: LoginResponseClient
-    public var authtoken: LoginResponseAuthtoken
-    public var region: LoginResponseRegion
+    public var auth: LoginResponseAuth
+    public var phone: LoginResponsePhone
+    public var verification: LoginResponseVerification
     public var lockoutTimeRemaining: Int
     public var forcePasswordReset: Bool
     public var allowPinResendSeconds: Int
 
-    public init(account: LoginResponseAccount, client: LoginResponseClient, authtoken: LoginResponseAuthtoken, region: LoginResponseRegion, lockoutTimeRemaining: Int, forcePasswordReset: Bool, allowPinResendSeconds: Int) {
+    public init(account: LoginResponseAccount, auth: LoginResponseAuth, phone: LoginResponsePhone, verification: LoginResponseVerification, lockoutTimeRemaining: Int, forcePasswordReset: Bool, allowPinResendSeconds: Int) {
         self.account = account
-        self.client = client
-        self.authtoken = authtoken
-        self.region = region
+        self.auth = auth
+        self.phone = phone
+        self.verification = verification
         self.lockoutTimeRemaining = lockoutTimeRemaining
         self.forcePasswordReset = forcePasswordReset
         self.allowPinResendSeconds = allowPinResendSeconds
@@ -29,9 +29,9 @@ public struct LoginResponse: Codable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case account
-        case client
-        case authtoken
-        case region
+        case auth
+        case phone
+        case verification
         case lockoutTimeRemaining = "lockout_time_remaining"
         case forcePasswordReset = "force_password_reset"
         case allowPinResendSeconds = "allow_pin_resend_seconds"

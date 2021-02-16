@@ -9,16 +9,13 @@ import Foundation
 
 public struct LoginResponseClient: Codable {
 
-    public var id: Int
     public var verificationRequired: Bool
 
-    public init(id: Int, verificationRequired: Bool) {
-        self.id = id
+    public init(verificationRequired: Bool) {
         self.verificationRequired = verificationRequired
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case id
         case verificationRequired = "verification_required"
     }
 

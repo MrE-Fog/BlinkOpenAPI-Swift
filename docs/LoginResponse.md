@@ -4,9 +4,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account** | [**LoginResponseAccount**](LoginResponseAccount.md) |  | 
-**client** | [**LoginResponseClient**](LoginResponseClient.md) |  | 
-**authtoken** | [**LoginResponseAuthtoken**](LoginResponseAuthtoken.md) |  | 
-**region** | [**LoginResponseRegion**](LoginResponseRegion.md) |  | 
+**auth** | [**LoginResponseAuth**](LoginResponseAuth.md) |  | 
+**phone** | [**LoginResponsePhone**](LoginResponsePhone.md) |  | 
+**verification** | [**LoginResponseVerification**](LoginResponseVerification.md) |  | 
 **lockoutTimeRemaining** | **Int** |  | 
 **forcePasswordReset** | **Bool** |  | 
 **allowPinResendSeconds** | **Int** |  | 
