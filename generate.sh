@@ -14,9 +14,6 @@ openapi-generator generate \
 
 # Apply patches for Linux
 
-rm Package.resolved
+rm -f Package.resolved
 
-for i in ./PatchesForLinux/*.patch
-do
-    patch -p1 < "$i"
-done
+patch -p1 < patch-for-Linux.diff

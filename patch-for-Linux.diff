@@ -1,0 +1,194 @@
+--- b/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/URLSessionImplementations.swift
+@@ -5,7 +5,10 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
++#if !os(macOS) && !os(Linux)
+-#if !os(macOS)
+ import MobileCoreServices
+ #endif
+ 
+@@ -598,11 +601,13 @@
+     func mimeType(for url: URL) -> String {
+         let pathExtension = url.pathExtension
+ 
++        #if !os(Linux)
+         if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
+             if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
+                 return mimetype as String
+             }
+         }
++        #endif
+         return "application/octet-stream"
+     }
+ 
+--- b/Package.swift
++++ a/Package.swift
+@@ -1,4 +1,4 @@
++// swift-tools-version:5.3
+-// swift-tools-version:5.1
+ 
+ import PackageDescription
+ 
+@@ -20,13 +20,17 @@
+     dependencies: [
+         // Dependencies declare other packages that this package depends on.
+         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.1"),
++        .package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.10.1"),
+     ],
+     targets: [
+         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+         .target(
+             name: "BlinkOpenAPI",
++            dependencies: [
++                "AnyCodable",
++                .product(name: "OpenCombine", package: "OpenCombine", condition: .when(platforms: [.linux])),
++            ],
+-            dependencies: ["AnyCodable", ],
+             path: "BlinkOpenAPI/Classes"
+         ),
+     ]
+--- b/BlinkOpenAPI/Classes/OpenAPIs/Models.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/Models.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ protocol JSONEncodable {
+     func encodeToJSON() -> Any
+--- b/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/APIs/BlinkDefaultAPI.swift
+@@ -6,12 +6,16 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import OpenCombine
++#else
+ #if canImport(Combine)
+ import Combine
+ #endif
+ #if canImport(AnyCodable)
+ import AnyCodable
+ #endif
++#endif
+ 
+ open class BlinkDefaultAPI {
+ 
+@@ -22,7 +26,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<InitialCommandResponse, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func disableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
+         return Future<InitialCommandResponse, Error> { promise in
+@@ -75,7 +79,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<InitialCommandResponse, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func enableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
+         return Future<InitialCommandResponse, Error> { promise in
+@@ -127,7 +131,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<URL, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func getThumbnail(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
+         return Future<URL, Error> { promise in
+@@ -175,7 +179,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<URL, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func getVideo(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
+         return Future<URL, Error> { promise in
+@@ -225,7 +229,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<VideoEvents, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func getVideoEvents(accountID: Int, since: Date, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
+         return Future<VideoEvents, Error> { promise in
+@@ -279,7 +283,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<HomeScreenResponse, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func homescreen(accountID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<HomeScreenResponse, Error> {
+         return Future<HomeScreenResponse, Error> { promise in
+@@ -327,7 +331,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<LoginResponse, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func login(loginRequest: LoginRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<LoginResponse, Error> {
+         return Future<LoginResponse, Error> { promise in
+@@ -374,7 +378,7 @@
+      - parameter apiResponseQueue: The queue on which api response is dispatched.
+      - returns: AnyPublisher<VerifyPinResponse, Error>
+      */
++    #if canImport(Combine) || canImport(OpenCombine)
+-    #if canImport(Combine)
+     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+     open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VerifyPinResponse, Error> {
+         return Future<VerifyPinResponse, Error> { promise in
+--- b/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/Extensions.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ #if canImport(AnyCodable)
+ import AnyCodable
+ #endif
+--- b/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
+@@ -5,6 +5,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ // We reverted the change of BlinkOpenAPIAPI to BlinkOpenAPI introduced in https://github.com/OpenAPITools/openapi-generator/pull/9624
+ // Because it was causing the following issue https://github.com/OpenAPITools/openapi-generator/issues/9953
+--- b/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift
++++ a/BlinkOpenAPI/Classes/OpenAPIs/JSONDataEncoding.swift
+@@ -6,6 +6,9 @@
+ //
+ 
+ import Foundation
++#if os(Linux)
++import FoundationNetworking
++#endif
+ 
+ public struct JSONDataEncoding {
+ 
