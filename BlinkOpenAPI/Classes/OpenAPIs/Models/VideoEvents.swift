@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct VideoEvents: Codable {
+public struct VideoEvents: Codable, Hashable {
 
     public var limit: Int
     public var purgeId: Int
@@ -28,4 +31,14 @@ public struct VideoEvents: Codable {
         case media
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(limit, forKey: .limit)
+        try container.encode(purgeId, forKey: .purgeId)
+        try container.encode(refreshCount, forKey: .refreshCount)
+        try container.encode(media, forKey: .media)
+    }
 }
+

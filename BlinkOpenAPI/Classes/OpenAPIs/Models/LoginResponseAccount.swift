@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginResponseAccount: Codable {
+public struct LoginResponseAccount: Codable, Hashable {
 
     public var accountId: Int
     public var userId: Int
@@ -46,4 +49,20 @@ public struct LoginResponseAccount: Codable {
         case verificationChannel = "verification_channel"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(accountId, forKey: .accountId)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(clientId, forKey: .clientId)
+        try container.encode(newAccount, forKey: .newAccount)
+        try container.encode(tier, forKey: .tier)
+        try container.encode(region, forKey: .region)
+        try container.encode(accountVerificationRequired, forKey: .accountVerificationRequired)
+        try container.encode(clientVerificationRequired, forKey: .clientVerificationRequired)
+        try container.encode(phoneVerificationRequired, forKey: .phoneVerificationRequired)
+        try container.encode(verificationChannel, forKey: .verificationChannel)
+    }
 }
+

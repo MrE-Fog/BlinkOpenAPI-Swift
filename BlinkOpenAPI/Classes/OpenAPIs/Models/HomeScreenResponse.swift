@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct HomeScreenResponse: Codable {
+public struct HomeScreenResponse: Codable, Hashable {
 
     public var account: HomeScreenResponseAccount
     public var networks: [Network]
@@ -28,4 +31,14 @@ public struct HomeScreenResponse: Codable {
         case cameras
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(account, forKey: .account)
+        try container.encode(networks, forKey: .networks)
+        try container.encode(syncModules, forKey: .syncModules)
+        try container.encode(cameras, forKey: .cameras)
+    }
 }
+

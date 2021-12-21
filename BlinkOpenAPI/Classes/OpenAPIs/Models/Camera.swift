@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct Camera: Codable {
+public struct Camera: Codable, Hashable {
 
     public enum Status: String, Codable, CaseIterable {
         case done = "done"
@@ -75,4 +78,27 @@ public struct Camera: Codable {
         case localStorageCompatible = "local_storage_compatible"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(name, forKey: .name)
+        try container.encode(serial, forKey: .serial)
+        try container.encode(fwVersion, forKey: .fwVersion)
+        try container.encode(type, forKey: .type)
+        try container.encode(enabled, forKey: .enabled)
+        try container.encode(thumbnail, forKey: .thumbnail)
+        try container.encode(status, forKey: .status)
+        try container.encode(battery, forKey: .battery)
+        try container.encode(usageRate, forKey: .usageRate)
+        try container.encode(networkId, forKey: .networkId)
+        try container.encode(issues, forKey: .issues)
+        try container.encode(signals, forKey: .signals)
+        try container.encode(localStorageEnabled, forKey: .localStorageEnabled)
+        try container.encode(localStorageCompatible, forKey: .localStorageCompatible)
+    }
 }
+

@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginResponseVerificationEmail: Codable {
+public struct LoginResponseVerificationEmail: Codable, Hashable {
 
     public var _required: Bool
 
@@ -19,4 +22,11 @@ public struct LoginResponseVerificationEmail: Codable {
         case _required = "required"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(_required, forKey: ._required)
+    }
 }
+

@@ -6,11 +6,15 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct Media: Codable {
+public struct Media: Codable, Hashable {
 
     public enum Device: String, Codable, CaseIterable {
         case camera = "camera"
+        case owl = "owl"
     }
     public enum ModelType: String, Codable, CaseIterable {
         case video = "video"
@@ -74,4 +78,26 @@ public struct Media: Codable {
         case timeZone = "time_zone"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(deleted, forKey: .deleted)
+        try container.encode(device, forKey: .device)
+        try container.encode(deviceId, forKey: .deviceId)
+        try container.encode(deviceName, forKey: .deviceName)
+        try container.encode(networkId, forKey: .networkId)
+        try container.encode(networkName, forKey: .networkName)
+        try container.encode(type, forKey: .type)
+        try container.encode(source, forKey: .source)
+        try container.encode(watched, forKey: .watched)
+        try container.encode(partial, forKey: .partial)
+        try container.encode(thumbnail, forKey: .thumbnail)
+        try container.encode(media, forKey: .media)
+        try container.encode(timeZone, forKey: .timeZone)
+    }
 }
+

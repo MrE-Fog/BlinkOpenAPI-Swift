@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct Issue: Codable {
+public struct Issue: Codable, Hashable {
 
     public var unknown: Int?
 
@@ -19,4 +22,11 @@ public struct Issue: Codable {
         case unknown = "__unknown"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(unknown, forKey: .unknown)
+    }
 }
+

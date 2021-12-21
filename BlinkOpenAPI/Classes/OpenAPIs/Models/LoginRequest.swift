@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginRequest: Codable {
+public struct LoginRequest: Codable, Hashable {
 
     public var uniqueId: String?
     public var password: String
@@ -37,4 +40,17 @@ public struct LoginRequest: Codable {
         case deviceIdentifier = "device_identifier"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(uniqueId, forKey: .uniqueId)
+        try container.encode(password, forKey: .password)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(clientName, forKey: .clientName)
+        try container.encodeIfPresent(appVersion, forKey: .appVersion)
+        try container.encodeIfPresent(reauth, forKey: .reauth)
+        try container.encodeIfPresent(deviceIdentifier, forKey: .deviceIdentifier)
+    }
 }
+

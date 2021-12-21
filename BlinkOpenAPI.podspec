@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/OpenAPITools/openapi-generator'
   s.summary = 'BlinkOpenAPI Swift SDK'
   s.source_files = 'BlinkOpenAPI/Classes/**/*.swift'
+  s.dependency 'AnyCodable-FlightSchool', '~> 0.6.1'
 end

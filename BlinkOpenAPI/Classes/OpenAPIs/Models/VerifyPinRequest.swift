@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct VerifyPinRequest: Codable {
+public struct VerifyPinRequest: Codable, Hashable {
 
     public var pin: String
 
@@ -15,4 +18,15 @@ public struct VerifyPinRequest: Codable {
         self.pin = pin
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case pin
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(pin, forKey: .pin)
+    }
 }
+

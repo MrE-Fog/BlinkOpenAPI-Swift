@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginResponse: Codable {
+public struct LoginResponse: Codable, Hashable {
 
     public var account: LoginResponseAccount
     public var auth: LoginResponseAuth
@@ -37,4 +40,17 @@ public struct LoginResponse: Codable {
         case allowPinResendSeconds = "allow_pin_resend_seconds"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(account, forKey: .account)
+        try container.encode(auth, forKey: .auth)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(verification, forKey: .verification)
+        try container.encode(lockoutTimeRemaining, forKey: .lockoutTimeRemaining)
+        try container.encode(forcePasswordReset, forKey: .forcePasswordReset)
+        try container.encode(allowPinResendSeconds, forKey: .allowPinResendSeconds)
+    }
 }
+

@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct HomeScreenResponseAccount: Codable {
+public struct HomeScreenResponseAccount: Codable, Hashable {
 
     public var id: Int
     public var emailVerified: Bool
@@ -25,4 +28,13 @@ public struct HomeScreenResponseAccount: Codable {
         case emailVerificationRequired = "email_verification_required"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(emailVerified, forKey: .emailVerified)
+        try container.encode(emailVerificationRequired, forKey: .emailVerificationRequired)
+    }
 }
+

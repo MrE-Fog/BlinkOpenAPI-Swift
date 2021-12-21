@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginResponsePhone: Codable {
+public struct LoginResponsePhone: Codable, Hashable {
 
     public var number: String
     public var last4Digits: String
@@ -28,4 +31,14 @@ public struct LoginResponsePhone: Codable {
         case valid
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(number, forKey: .number)
+        try container.encode(last4Digits, forKey: .last4Digits)
+        try container.encode(countryCallingCode, forKey: .countryCallingCode)
+        try container.encode(valid, forKey: .valid)
+    }
 }
+

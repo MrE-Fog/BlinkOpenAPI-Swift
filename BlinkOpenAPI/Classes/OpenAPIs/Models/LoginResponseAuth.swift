@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct LoginResponseAuth: Codable {
+public struct LoginResponseAuth: Codable, Hashable {
 
     public var token: String
 
@@ -15,4 +18,15 @@ public struct LoginResponseAuth: Codable {
         self.token = token
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case token
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(token, forKey: .token)
+    }
 }
+

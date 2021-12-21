@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct Network: Codable {
+public struct Network: Codable, Hashable {
 
     public var id: Int
     public var createdAt: Date
@@ -40,4 +43,18 @@ public struct Network: Codable {
         case lvSave = "lv_save"
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(name, forKey: .name)
+        try container.encode(timeZone, forKey: .timeZone)
+        try container.encode(dst, forKey: .dst)
+        try container.encode(armed, forKey: .armed)
+        try container.encode(lvSave, forKey: .lvSave)
+    }
 }
+

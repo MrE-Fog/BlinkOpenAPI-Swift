@@ -8,6 +8,9 @@ import Foundation
 #if os(Linux)
 import FoundationNetworking
 #endif
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 extension Bool: JSONEncodable {
     func encodeToJSON() -> Any { return self as Any }
@@ -52,6 +55,12 @@ private func encodeIfPossible<T>(_ object: T) -> Any {
 extension Array: JSONEncodable {
     func encodeToJSON() -> Any {
         return self.map(encodeIfPossible)
+    }
+}
+
+extension Set: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return Array(self).encodeToJSON()
     }
 }
 

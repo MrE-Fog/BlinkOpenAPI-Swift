@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct ModelError: Codable {
+public struct ModelError: Codable, Hashable {
 
     public var message: String
     public var code: Int
@@ -17,4 +20,17 @@ public struct ModelError: Codable {
         self.code = code
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case message
+        case code
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(message, forKey: .message)
+        try container.encode(code, forKey: .code)
+    }
 }
+

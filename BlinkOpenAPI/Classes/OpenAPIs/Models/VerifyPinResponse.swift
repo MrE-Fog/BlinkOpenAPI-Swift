@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct VerifyPinResponse: Codable {
+public struct VerifyPinResponse: Codable, Hashable {
 
     public var valid: Bool
     public var requireNewPin: Bool
@@ -28,4 +31,14 @@ public struct VerifyPinResponse: Codable {
         case code
     }
 
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(valid, forKey: .valid)
+        try container.encode(requireNewPin, forKey: .requireNewPin)
+        try container.encode(message, forKey: .message)
+        try container.encode(code, forKey: .code)
+    }
 }
+
