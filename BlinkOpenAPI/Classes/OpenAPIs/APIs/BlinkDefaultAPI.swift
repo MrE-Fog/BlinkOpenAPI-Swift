@@ -29,16 +29,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func disableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
+        var requestTask: RequestTask?
         return Future<InitialCommandResponse, Error> { promise in
-            disableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result in
+            requestTask = disableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -82,16 +87,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func enableCamera(networkID: Int, cameraID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<InitialCommandResponse, Error> {
+        var requestTask: RequestTask?
         return Future<InitialCommandResponse, Error> { promise in
-            enableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result in
+            requestTask = enableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -134,16 +144,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getThumbnail(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
+        var requestTask: RequestTask?
         return Future<URL, Error> { promise in
-            getThumbnailWithRequestBuilder(media: media).execute(apiResponseQueue) { result in
+            requestTask = getThumbnailWithRequestBuilder(media: media).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -182,16 +197,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideo(media: String, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<URL, Error> {
+        var requestTask: RequestTask?
         return Future<URL, Error> { promise in
-            getVideoWithRequestBuilder(media: media).execute(apiResponseQueue) { result in
+            requestTask = getVideoWithRequestBuilder(media: media).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -232,16 +252,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func getVideoEvents(accountID: Int, since: Date, page: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VideoEvents, Error> {
+        var requestTask: RequestTask?
         return Future<VideoEvents, Error> { promise in
-            getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page).execute(apiResponseQueue) { result in
+            requestTask = getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -286,16 +311,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func homescreen(accountID: Int, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<HomeScreenResponse, Error> {
+        var requestTask: RequestTask?
         return Future<HomeScreenResponse, Error> { promise in
-            homescreenWithRequestBuilder(accountID: accountID).execute(apiResponseQueue) { result in
+            requestTask = homescreenWithRequestBuilder(accountID: accountID).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -334,16 +364,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func login(loginRequest: LoginRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<LoginResponse, Error> {
+        var requestTask: RequestTask?
         return Future<LoginResponse, Error> { promise in
-            loginWithRequestBuilder(loginRequest: loginRequest).execute(apiResponseQueue) { result in
+            requestTask = loginWithRequestBuilder(loginRequest: loginRequest).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 
@@ -381,16 +416,21 @@ open class BlinkDefaultAPI {
     #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest, apiResponseQueue: DispatchQueue = BlinkOpenAPIAPI.apiResponseQueue) -> AnyPublisher<VerifyPinResponse, Error> {
+        var requestTask: RequestTask?
         return Future<VerifyPinResponse, Error> { promise in
-            verifyPinWithRequestBuilder(accountID: accountID, clientID: clientID, verifyPinRequest: verifyPinRequest).execute(apiResponseQueue) { result in
+            requestTask = verifyPinWithRequestBuilder(accountID: accountID, clientID: clientID, verifyPinRequest: verifyPinRequest).execute(apiResponseQueue) { result in
                 switch result {
                 case let .success(response):
-                    promise(.success(response.body!))
+                    promise(.success(response.body))
                 case let .failure(error):
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: {
+            requestTask?.cancel()
+        })
+        .eraseToAnyPublisher()
     }
     #endif
 

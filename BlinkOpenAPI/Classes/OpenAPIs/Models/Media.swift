@@ -15,6 +15,7 @@ public struct Media: Codable, Hashable {
     public enum Device: String, Codable, CaseIterable {
         case camera = "camera"
         case owl = "owl"
+        case catalina = "catalina"
     }
     public enum ModelType: String, Codable, CaseIterable {
         case video = "video"
