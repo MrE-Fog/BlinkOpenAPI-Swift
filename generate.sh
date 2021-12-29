@@ -16,4 +16,4 @@ openapi-generator generate \
 
 rm -f Package.resolved
 
-patch -p1 < patch-for-Linux.diff
+patch --no-backup-if-mismatch -p1 < patch-for-Linux.diff
