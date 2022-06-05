@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Camera: Codable, Hashable {
+public struct Camera: Codable, JSONEncodable, Hashable {
 
     public enum Status: String, Codable, CaseIterable {
         case done = "done"
@@ -28,7 +28,7 @@ public struct Camera: Codable, Hashable {
     public var fwVersion: String
     public var type: String
     public var enabled: Bool
-    public var thumbnail: String
+    public var thumbnail: String?
     public var status: Status
     public var battery: Battery
     public var usageRate: Bool
@@ -38,7 +38,7 @@ public struct Camera: Codable, Hashable {
     public var localStorageEnabled: Bool
     public var localStorageCompatible: Bool
 
-    public init(id: Int, createdAt: Date, updatedAt: Date, name: String, serial: String, fwVersion: String, type: String, enabled: Bool, thumbnail: String, status: Status, battery: Battery, usageRate: Bool, networkId: Int, issues: [Issue], signals: CameraSignals, localStorageEnabled: Bool, localStorageCompatible: Bool) {
+    public init(id: Int, createdAt: Date, updatedAt: Date, name: String, serial: String, fwVersion: String, type: String, enabled: Bool, thumbnail: String? = nil, status: Status, battery: Battery, usageRate: Bool, networkId: Int, issues: [Issue], signals: CameraSignals, localStorageEnabled: Bool, localStorageCompatible: Bool) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -90,7 +90,7 @@ public struct Camera: Codable, Hashable {
         try container.encode(fwVersion, forKey: .fwVersion)
         try container.encode(type, forKey: .type)
         try container.encode(enabled, forKey: .enabled)
-        try container.encode(thumbnail, forKey: .thumbnail)
+        try container.encodeIfPresent(thumbnail, forKey: .thumbnail)
         try container.encode(status, forKey: .status)
         try container.encode(battery, forKey: .battery)
         try container.encode(usageRate, forKey: .usageRate)

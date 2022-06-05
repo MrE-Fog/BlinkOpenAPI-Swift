@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct SyncModule: Codable, Hashable {
+public struct SyncModule: Codable, JSONEncodable, Hashable {
 
     public enum Status: String, Codable, CaseIterable {
         case online = "online"

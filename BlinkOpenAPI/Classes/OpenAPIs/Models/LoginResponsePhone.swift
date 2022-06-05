@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct LoginResponsePhone: Codable, Hashable {
+public struct LoginResponsePhone: Codable, JSONEncodable, Hashable {
 
     public var number: String
     public var last4Digits: String

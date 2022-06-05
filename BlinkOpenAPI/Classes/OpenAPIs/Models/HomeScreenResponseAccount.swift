@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct HomeScreenResponseAccount: Codable, Hashable {
+public struct HomeScreenResponseAccount: Codable, JSONEncodable, Hashable {
 
     public var id: Int
     public var emailVerified: Bool

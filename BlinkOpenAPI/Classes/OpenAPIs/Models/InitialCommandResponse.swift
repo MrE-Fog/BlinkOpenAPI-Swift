@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct InitialCommandResponse: Codable, Hashable {
+public struct InitialCommandResponse: Codable, JSONEncodable, Hashable {
 
     public var id: Int
 

@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Network: Codable, Hashable {
+public struct Network: Codable, JSONEncodable, Hashable {
 
     public var id: Int
     public var createdAt: Date

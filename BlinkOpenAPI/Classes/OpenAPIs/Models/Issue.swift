@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Issue: Codable, Hashable {
+public struct Issue: Codable, JSONEncodable, Hashable {
 
     public var unknown: Int?
 

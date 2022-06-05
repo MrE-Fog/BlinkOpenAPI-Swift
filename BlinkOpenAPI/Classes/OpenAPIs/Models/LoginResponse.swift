@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct LoginResponse: Codable, Hashable {
+public struct LoginResponse: Codable, JSONEncodable, Hashable {
 
     public var account: LoginResponseAccount
     public var auth: LoginResponseAuth

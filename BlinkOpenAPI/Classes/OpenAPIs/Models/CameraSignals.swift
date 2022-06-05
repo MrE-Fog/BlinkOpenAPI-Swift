@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct CameraSignals: Codable, Hashable {
+public struct CameraSignals: Codable, JSONEncodable, Hashable {
 
     public var lfr: Int
     public var wifi: Int

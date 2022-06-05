@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct LoginResponseVerificationPhone: Codable, Hashable {
+public struct LoginResponseVerificationPhone: Codable, JSONEncodable, Hashable {
 
     public var _required: Bool
     public var channel: String

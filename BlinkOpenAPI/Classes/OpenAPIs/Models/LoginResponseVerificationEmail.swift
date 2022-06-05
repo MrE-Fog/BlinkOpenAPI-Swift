@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct LoginResponseVerificationEmail: Codable, Hashable {
+public struct LoginResponseVerificationEmail: Codable, JSONEncodable, Hashable {
 
     public var _required: Bool
 

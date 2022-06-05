@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct VerifyPinRequest: Codable, Hashable {
+public struct VerifyPinRequest: Codable, JSONEncodable, Hashable {
 
     public var pin: String
 

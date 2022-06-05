@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **fwVersion** | **String** |  | 
 **type** | **String** |  | 
 **enabled** | **Bool** |  | 
-**thumbnail** | **String** |  | 
+**thumbnail** | **String** |  | [optional] 
 **status** | **String** |  | 
 **battery** | **String** |  | 
 **usageRate** | **Bool** |  | 

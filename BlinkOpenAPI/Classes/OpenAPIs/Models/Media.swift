@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Media: Codable, Hashable {
+public struct Media: Codable, JSONEncodable, Hashable {
 
     public enum Device: String, Codable, CaseIterable {
         case camera = "camera"
@@ -23,6 +23,7 @@ public struct Media: Codable, Hashable {
     public enum Source: String, Codable, CaseIterable {
         case liveview = "liveview"
         case pir = "pir"
+        case snapshot = "snapshot"
     }
     public var id: Int
     public var createdAt: Date

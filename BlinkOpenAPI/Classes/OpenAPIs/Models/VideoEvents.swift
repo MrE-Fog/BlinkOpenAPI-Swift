@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct VideoEvents: Codable, Hashable {
+public struct VideoEvents: Codable, JSONEncodable, Hashable {
 
     public var limit: Int
     public var purgeId: Int

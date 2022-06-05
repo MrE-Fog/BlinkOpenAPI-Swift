@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct HomeScreenResponse: Codable, Hashable {
+public struct HomeScreenResponse: Codable, JSONEncodable, Hashable {
 
     public var account: HomeScreenResponseAccount
     public var networks: [Network]
