@@ -6,15 +6,8 @@
 //
 
 import Foundation
-#if os(Linux)
-import OpenCombine
-#else
-#if canImport(Combine)
-import Combine
-#endif
 #if canImport(AnyCodable)
 import AnyCodable
-#endif
 #endif
 
 open class BlinkDefaultAPI {
@@ -23,28 +16,33 @@ open class BlinkDefaultAPI {
 
      - parameter networkID: (path)  
      - parameter cameraID: (path)  
-     - returns: AnyPublisher<InitialCommandResponse, Error>
+     - returns: InitialCommandResponse
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func disableCamera(networkID: Int, cameraID: Int) -> AnyPublisher<InitialCommandResponse, Error> {
-        var requestTask: RequestTask?
-        return Future<InitialCommandResponse, Error> { promise in
-            requestTask = disableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func disableCamera(networkID: Int, cameraID: Int) async throws -> InitialCommandResponse {
+        let requestBuilder = disableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - POST /network/{networkID}/camera/{cameraID}/disable
@@ -73,35 +71,40 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<InitialCommandResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter networkID: (path)  
      - parameter cameraID: (path)  
-     - returns: AnyPublisher<InitialCommandResponse, Error>
+     - returns: InitialCommandResponse
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func enableCamera(networkID: Int, cameraID: Int) -> AnyPublisher<InitialCommandResponse, Error> {
-        var requestTask: RequestTask?
-        return Future<InitialCommandResponse, Error> { promise in
-            requestTask = enableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func enableCamera(networkID: Int, cameraID: Int) async throws -> InitialCommandResponse {
+        let requestBuilder = enableCameraWithRequestBuilder(networkID: networkID, cameraID: cameraID)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - POST /network/{networkID}/camera/{cameraID}/enable
@@ -130,34 +133,39 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<InitialCommandResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter media: (path) Media URL 
-     - returns: AnyPublisher<URL, Error>
+     - returns: URL
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getThumbnail(media: String) -> AnyPublisher<URL, Error> {
-        var requestTask: RequestTask?
-        return Future<URL, Error> { promise in
-            requestTask = getThumbnailWithRequestBuilder(media: media).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func getThumbnail(media: String) async throws -> URL {
+        let requestBuilder = getThumbnailWithRequestBuilder(media: media)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - GET /{media}.jpg
@@ -182,34 +190,39 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<URL>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter media: (path) Media URL 
-     - returns: AnyPublisher<URL, Error>
+     - returns: URL
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getVideo(media: String) -> AnyPublisher<URL, Error> {
-        var requestTask: RequestTask?
-        return Future<URL, Error> { promise in
-            requestTask = getVideoWithRequestBuilder(media: media).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func getVideo(media: String) async throws -> URL {
+        let requestBuilder = getVideoWithRequestBuilder(media: media)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - GET /{media}
@@ -234,7 +247,7 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<URL>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
@@ -242,28 +255,33 @@ open class BlinkDefaultAPI {
      - parameter accountID: (path) Account ID 
      - parameter since: (query)  
      - parameter page: (query) Page number for multiple pages of results 
-     - returns: AnyPublisher<VideoEvents, Error>
+     - returns: VideoEvents
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getVideoEvents(accountID: Int, since: Date, page: Int) -> AnyPublisher<VideoEvents, Error> {
-        var requestTask: RequestTask?
-        return Future<VideoEvents, Error> { promise in
-            requestTask = getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func getVideoEvents(accountID: Int, since: Date, page: Int) async throws -> VideoEvents {
+        let requestBuilder = getVideoEventsWithRequestBuilder(accountID: accountID, since: since, page: page)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - GET /api/v1/accounts/{accountID}/media/changed
@@ -282,8 +300,8 @@ open class BlinkDefaultAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "since": since.encodeToJSON(),
-            "page": page.encodeToJSON(),
+            "since": (wrappedValue: since.encodeToJSON(), isExplode: true),
+            "page": (wrappedValue: page.encodeToJSON(), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -294,34 +312,39 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<VideoEvents>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter accountID: (path) Account ID 
-     - returns: AnyPublisher<HomeScreenResponse, Error>
+     - returns: HomeScreenResponse
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func homescreen(accountID: Int) -> AnyPublisher<HomeScreenResponse, Error> {
-        var requestTask: RequestTask?
-        return Future<HomeScreenResponse, Error> { promise in
-            requestTask = homescreenWithRequestBuilder(accountID: accountID).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func homescreen(accountID: Int) async throws -> HomeScreenResponse {
+        let requestBuilder = homescreenWithRequestBuilder(accountID: accountID)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - GET /api/v3/accounts/{accountID}/homescreen
@@ -346,34 +369,39 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<HomeScreenResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
      - parameter loginRequest: (body)  
-     - returns: AnyPublisher<LoginResponse, Error>
+     - returns: LoginResponse
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func login(loginRequest: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
-        var requestTask: RequestTask?
-        return Future<LoginResponse, Error> { promise in
-            requestTask = loginWithRequestBuilder(loginRequest: loginRequest).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func login(loginRequest: LoginRequest) async throws -> LoginResponse {
+        let requestBuilder = loginWithRequestBuilder(loginRequest: loginRequest)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - POST /api/v5/account/login
@@ -395,7 +423,7 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<LoginResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
@@ -403,28 +431,33 @@ open class BlinkDefaultAPI {
      - parameter accountID: (path) Account ID 
      - parameter clientID: (path) Client ID 
      - parameter verifyPinRequest: (body)  
-     - returns: AnyPublisher<VerifyPinResponse, Error>
+     - returns: VerifyPinResponse
      */
-    #if canImport(Combine) || canImport(OpenCombine)
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest) -> AnyPublisher<VerifyPinResponse, Error> {
-        var requestTask: RequestTask?
-        return Future<VerifyPinResponse, Error> { promise in
-            requestTask = verifyPinWithRequestBuilder(accountID: accountID, clientID: clientID, verifyPinRequest: verifyPinRequest).execute { result in
-                switch result {
-                case let .success(response):
-                    promise(.success(response.body))
-                case let .failure(error):
-                    promise(.failure(error))
+    open class func verifyPin(accountID: Int, clientID: Int, verifyPinRequest: VerifyPinRequest) async throws -> VerifyPinResponse {
+        let requestBuilder = verifyPinWithRequestBuilder(accountID: accountID, clientID: clientID, verifyPinRequest: verifyPinRequest)
+        let requestTask = requestBuilder.requestTask
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                  continuation.resume(throwing: CancellationError())
+                  return
+                }
+
+                requestBuilder.execute { result in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response.body)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
+        } onCancel: {
+            requestTask.cancel()
         }
-        .handleEvents(receiveCancel: {
-            requestTask?.cancel()
-        })
-        .eraseToAnyPublisher()
     }
-    #endif
 
     /**
      - POST /api/v4/account/{accountID}/client/{clientID}/pin/verify
@@ -454,6 +487,6 @@ open class BlinkDefaultAPI {
 
         let localVariableRequestBuilder: RequestBuilder<VerifyPinResponse>.Type = BlinkOpenAPIAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 }

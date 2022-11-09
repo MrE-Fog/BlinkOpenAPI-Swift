@@ -1,4 +1,5 @@
 .gitignore
+.swiftformat
 BlinkOpenAPI.podspec
 BlinkOpenAPI/Classes/OpenAPIs/APIHelper.swift
 BlinkOpenAPI/Classes/OpenAPIs/APIs.swift
