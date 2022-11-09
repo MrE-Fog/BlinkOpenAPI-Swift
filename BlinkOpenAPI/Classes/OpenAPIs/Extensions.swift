@@ -5,6 +5,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 #if canImport(AnyCodable)
 import AnyCodable
 #endif
